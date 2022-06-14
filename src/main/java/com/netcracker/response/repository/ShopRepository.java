@@ -1,4 +1,4 @@
-package com.netcracker.repository;
+package com.netcracker.response.repository;
 
 import com.netcracker.model.Shop;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +13,7 @@ public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE shops SET name = :newSurname WHERE id = :id", nativeQuery = true)
+    @Query(value = "UPDATE shops SET name = :newName WHERE id = :id", nativeQuery = true)
     void updateNameById(@Param("newName") String newName, @Param("id") int id);
 
     @Transactional

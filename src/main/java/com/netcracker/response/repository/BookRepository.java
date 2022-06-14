@@ -1,5 +1,6 @@
-package com.netcracker.repository;
+package com.netcracker.response.repository;
 
+import com.netcracker.dto.books.NameAndPriceBookDto;
 import com.netcracker.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -7,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {
@@ -30,4 +33,10 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Modifying
     @Query(value = "UPDATE books SET count = :newCount WHERE id = :id", nativeQuery = true)
     void updateCountById(@Param("newCount") int newCount, @Param("id") int id);
+
+    @Query(value = "SELECT name, price FROM books", nativeQuery = true)
+    List<NameAndPriceBookDto> getAllNameAndPrice();
+
+    @Query(value = "SELECT name, price FROM books WHERE name LIKE %:word% OR price > :price", nativeQuery = true)
+    List<NameAndPriceBookDto> findBooksByWordOrMoreThenPrice(@Param("word") String word, @Param("price") int price);
 }

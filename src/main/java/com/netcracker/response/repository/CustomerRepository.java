@@ -1,4 +1,4 @@
-package com.netcracker.repository;
+package com.netcracker.response.repository;
 
 import com.netcracker.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
