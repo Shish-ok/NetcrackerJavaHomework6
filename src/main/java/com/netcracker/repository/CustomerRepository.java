@@ -1,5 +1,6 @@
 package com.netcracker.repository;
 
+import com.netcracker.dto.customers.CustomersDistrictsDto;
 import com.netcracker.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,4 +26,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Modifying
     @Query(value = "UPDATE customers SET discount = :newDiscount WHERE id = :id", nativeQuery = true)
     void updateDiscountById(@Param("newDiscount") String newSurname, @Param("id") int id);
+
+    @Query(value = "SELECT DISTINCT district FROM customers", nativeQuery = true)
+    CustomersDistrictsDto getCustomersDistricts();
 }

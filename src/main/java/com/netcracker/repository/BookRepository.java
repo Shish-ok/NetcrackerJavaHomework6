@@ -34,9 +34,9 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     @Query(value = "UPDATE books SET count = :newCount WHERE id = :id", nativeQuery = true)
     void updateCountById(@Param("newCount") int newCount, @Param("id") int id);
 
-    @Query(value = "SELECT name, price FROM books", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT new com.netcracker.dto.books.NameAndPriceBookDto(name, price) FROM Book")
     List<NameAndPriceBookDto> getAllNameAndPrice();
 
-    @Query(value = "SELECT name, price FROM books WHERE name LIKE %:word% OR price > :price", nativeQuery = true)
-    List<NameAndPriceBookDto> findBooksByWordOrMoreThenPrice(@Param("word") String word, @Param("price") int price);
+    @Query(value = "SELECT new com.netcracker.dto.books.NameAndPriceBookDto(name, price) FROM Book WHERE name LIKE %:word% OR price > :price")
+    List<NameAndPriceBookDto> findBooksByWordOrMoreThenPrice(String word, int price);
 }
