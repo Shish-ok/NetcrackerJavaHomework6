@@ -1,6 +1,5 @@
 package com.netcracker.model;
 
-import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -19,14 +18,17 @@ public class Purchase {
     @Column(name = "date")
     private Date date;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "shop_id", referencedColumnName = "id")
-    private int shopId;
+    private Shop shopId;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private int customerId;
+    private Customer customerId;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "book_id", referencedColumnName = "id")
-    private int bookId;
+    private Book bookId;
 
     @Column(name = "count")
     private int count;
