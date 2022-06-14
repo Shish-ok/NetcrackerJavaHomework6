@@ -5,7 +5,7 @@ import com.netcracker.dto.books.UpdateBookDto;
 import com.netcracker.dto.books.WordAndPriceDto;
 import com.netcracker.exception.ResourceNotFoundException;
 import com.netcracker.model.Book;
-import com.netcracker.response.repository.BookRepository;
+import com.netcracker.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

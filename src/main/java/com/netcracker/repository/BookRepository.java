@@ -1,4 +1,4 @@
-package com.netcracker.response.repository;
+package com.netcracker.repository;
 
 import com.netcracker.dto.books.NameAndPriceBookDto;
 import com.netcracker.model.Book;
