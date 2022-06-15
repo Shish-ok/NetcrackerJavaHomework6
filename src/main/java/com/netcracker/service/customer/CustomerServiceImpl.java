@@ -3,7 +3,7 @@ package com.netcracker.service.customer;
 import com.netcracker.dto.customers.CustomersDistrictsDto;
 import com.netcracker.dto.customers.SurnameAndDiscountDto;
 import com.netcracker.dto.customers.UpdateCustomerDto;
-import com.netcracker.exception.ResourceNotFoundException;
+import com.netcracker.exception.NotFoundException;
 import com.netcracker.model.Customer;
 import com.netcracker.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,19 +42,19 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getById(int id) {
-        return customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found customer with id: " + id));
+        return customerRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found customer with id: " + id));
     }
 
     @Override
     public String deleteCustomerById(int id) {
-        customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found customer with id: " + id));
+        customer = customerRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found customer with id: " + id));
         customerRepository.deleteById(id);
         return "Customer " + customer.getSurname() + " (id:" + id + ") — successfully deleted!";
     }
 
     @Override
     public String updateCustomer(int id, UpdateCustomerDto updateCustomerDto) {
-        customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found customer with id: " + id));
+        customer = customerRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found customer with id: " + id));
 
         StringBuilder updateMessage = new StringBuilder();
 
@@ -78,7 +78,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public String fullUpdateCustomer(int id, UpdateCustomerDto updateCustomerDto) {
-        customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found customer with id: " + id));
+        customer = customerRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found customer with id: " + id));
 
         customer.setSurname(updateCustomerDto.getSurname());
         customer.setDistrict(updateCustomerDto.getDistrict());

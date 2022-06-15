@@ -1,11 +1,14 @@
 package com.netcracker.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
+@Getter @Setter
 @Table(name = "purchases")
 public class Purchase {
 
@@ -16,7 +19,7 @@ public class Purchase {
 
     @CreatedDate
     @Column(name = "date")
-    private Date date;
+    private Timestamp date;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "shop_id", referencedColumnName = "id")

@@ -2,7 +2,7 @@ package com.netcracker.service.shop;
 
 import com.netcracker.dto.shops.ShopNameDto;
 import com.netcracker.dto.shops.UpdateShopDto;
-import com.netcracker.exception.ResourceNotFoundException;
+import com.netcracker.exception.NotFoundException;
 import com.netcracker.model.Shop;
 import com.netcracker.repository.ShopRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +20,14 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public String deleteShopById(int id) {
-        shop = shopRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found shop with id: " + id));
+        shop = shopRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found shop with id: " + id));
         shopRepository.deleteById(id);
         return "Shop \"" + shop.getName() + "\" (id:" + id + ") — successfully deleted!";
     }
 
     @Override
     public String updateShop(int id, UpdateShopDto updateShopDto) {
-        shop = shopRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found shop with id: " + id));
+        shop = shopRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found shop with id: " + id));
 
         StringBuilder updateMessage = new StringBuilder();
 
@@ -61,7 +61,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public Shop getShopById(int id) {
-        return shopRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found shop with id: " + id));
+        return shopRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found shop with id: " + id));
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public String fullUpdateShop(int id, UpdateShopDto updateShopDto) {
-        shop = shopRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Not found shop with id: " + id));
+        shop = shopRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found shop with id: " + id));
 
         shop.setName(updateShopDto.getName());
         shop.setLocation(updateShopDto.getLocation());

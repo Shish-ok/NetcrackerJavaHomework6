@@ -3,7 +3,7 @@ package com.netcracker.service.book;
 import com.netcracker.dto.books.NameAndPriceBookDto;
 import com.netcracker.dto.books.UpdateBookDto;
 import com.netcracker.dto.books.WordAndPriceDto;
-import com.netcracker.exception.ResourceNotFoundException;
+import com.netcracker.exception.NotFoundException;
 import com.netcracker.model.Book;
 import com.netcracker.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book getBookById(int bookId) {
-        return bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("Not found book with id: " + bookId));
+        return bookRepository.findById(bookId).orElseThrow(() -> new NotFoundException("Not found book with id: " + bookId));
     }
 
     @Override
@@ -36,7 +36,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public String updateBook(int bookId, UpdateBookDto updateBookDto) {
 
-        book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("Not found book with id: " + bookId));
+        book = bookRepository.findById(bookId).orElseThrow(() -> new NotFoundException("Not found book with id: " + bookId));
 
         StringBuilder updateMessage = new StringBuilder();
 
@@ -65,7 +65,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public String fullUpdateBook(int bookId, UpdateBookDto updateBookDto) {
-        book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("Not found book with id: " + bookId));
+        book = bookRepository.findById(bookId).orElseThrow(() -> new NotFoundException("Not found book with id: " + bookId));
 
         book.setName(updateBookDto.getName());
         book.setPrice(updateBookDto.getPrice());
@@ -77,7 +77,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public String deleteBook(int bookId) {
-        book = bookRepository.findById(bookId).orElseThrow(() -> new ResourceNotFoundException("Not found book with id: " + bookId));
+        book = bookRepository.findById(bookId).orElseThrow(() -> new NotFoundException("Not found book with id: " + bookId));
         bookRepository.deleteById(bookId);
         return "Book \"" + book.getName() + "\" (id:" + bookId + ") — successfully deleted!";
     }
