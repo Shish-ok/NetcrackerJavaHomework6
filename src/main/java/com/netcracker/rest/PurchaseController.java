@@ -1,9 +1,6 @@
 package com.netcracker.rest;
 
-import com.netcracker.dto.purchase.MonthDto;
-import com.netcracker.dto.purchase.SalesAmountDto;
-import com.netcracker.dto.purchase.SurnameAndShopNameDto;
-import com.netcracker.dto.purchase.UpdatePurchaseDto;
+import com.netcracker.dto.purchase.*;
 import com.netcracker.model.Purchase;
 import com.netcracker.service.purchase.PurchaseService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -74,5 +72,28 @@ public class PurchaseController {
         return ResponseEntity.ok(purchaseService.getAmountOfSales());
     }
 
+    @Operation(summary = "Get orders for an amount greater than N")
+    @GetMapping("purchases_more_then_n/{n}")
+    public ResponseEntity<List<ProfitMoreThenNDto>> getPurchaseProfitMoreThenN(@PathVariable(value = "n") int n) {
+        return ResponseEntity.ok(purchaseService.getPurchaseProfitMoreThenN(n));
+    }
+
+    @Operation(summary = "Get purchases made in own district not earlier certain time")
+    @GetMapping("purchase_mage_not_earlier/{date}")
+    public ResponseEntity<List<SurnameAndShopNameDto>> getPurchaseNotBeforeTheDate(@PathVariable(value = "date") String date) {
+        return ResponseEntity.ok(purchaseService.getPurchaseNotBeforeTheDate(Date.valueOf(date)));
+    }
+
+    @Operation(summary = "Get from different district, except X, and between left and right percents")
+    @PostMapping("from_different_district")
+    public ResponseEntity<List<String>> getShopsFromLegalLocationAndDiscountBetweenTwoValues(@RequestBody LeftRightBanDistrictDto dto) {
+        return ResponseEntity.ok(purchaseService.getShopsFromLegalLocationAndDiscountBetweenTwoValues(dto.getLeft(), dto.getRight(), dto.getBanDistrict()));
+    }
+
+    @Operation(summary = "Get information of books acquired in the warehouse district the stock of which is left more than n")
+    @GetMapping("books_from_one_district/{n}")
+    public ResponseEntity<List<BookFromOneDistrictDto>> getBookFromOneDistrict(@PathVariable(value = "n") int n) {
+        return ResponseEntity.ok(purchaseService.getBookFromOneDistrict(n));
+    }
 
 }

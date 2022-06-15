@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Getter @Setter
 @AllArgsConstructor
 public class SalesAmountDto {
-    private Timestamp date;
+    private Date date;
     private String surname;
     private int discount;
     private String name;

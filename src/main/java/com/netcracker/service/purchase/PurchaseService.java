@@ -1,11 +1,9 @@
 package com.netcracker.service.purchase;
 
-import com.netcracker.dto.purchase.MonthDto;
-import com.netcracker.dto.purchase.SalesAmountDto;
-import com.netcracker.dto.purchase.SurnameAndShopNameDto;
-import com.netcracker.dto.purchase.UpdatePurchaseDto;
+import com.netcracker.dto.purchase.*;
 import com.netcracker.model.Purchase;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PurchaseService {
@@ -25,6 +23,14 @@ public interface PurchaseService {
     List<SurnameAndShopNameDto> getPurchaseHistoryBySurnameAndShopName();
 
     List<SalesAmountDto> getAmountOfSales();
+
+    List<ProfitMoreThenNDto> getPurchaseProfitMoreThenN(int n);
+
+    List<String> getShopsFromLegalLocationAndDiscountBetweenTwoValues(int left, int right, String banDistrict);
+
+    List<SurnameAndShopNameDto> getPurchaseNotBeforeTheDate(Date date);
+
+    List<BookFromOneDistrictDto> getBookFromOneDistrict(int n);
 
     String fullUpdatePurchase(int id, UpdatePurchaseDto updatePurchaseDto);
 

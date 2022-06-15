@@ -1,15 +1,14 @@
 package com.netcracker.service.purchase;
 
-import com.netcracker.dto.purchase.MonthDto;
-import com.netcracker.dto.purchase.SalesAmountDto;
-import com.netcracker.dto.purchase.SurnameAndShopNameDto;
-import com.netcracker.dto.purchase.UpdatePurchaseDto;
+import com.netcracker.dto.purchase.*;
 import com.netcracker.exception.NotFoundException;
 import com.netcracker.model.Purchase;
 import com.netcracker.repository.PurchaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -55,12 +54,12 @@ public class PurchaseImpl implements PurchaseService{
         }
 
         if (updatePurchaseDto.getCount() != null) {
-            updateMessage.append("Count of book successfully updated: old count " + purchase.getCount() + ", new count " + updatePurchaseDto.getCount() + "\n");
-            purchase.setCount(updatePurchaseDto.getCount());
+            updateMessage.append("Count of book successfully updated: old count " + purchase.getAmount() + ", new count " + updatePurchaseDto.getCount() + "\n");
+            purchase.setAmount(updatePurchaseDto.getCount());
         }
 
         if(updatePurchaseDto.getPrice() != null) {
-            updateMessage.append("Price of book successfully updated: old price " + purchase.getCount() + ", new price " + updatePurchaseDto.getCount());
+            updateMessage.append("Price of book successfully updated: old price " + purchase.getPrice() + ", new price " + updatePurchaseDto.getPrice());
             purchase.setPrice(updatePurchaseDto.getPrice());
         }
 
@@ -100,6 +99,26 @@ public class PurchaseImpl implements PurchaseService{
     }
 
     @Override
+    public List<ProfitMoreThenNDto> getPurchaseProfitMoreThenN(int n) {
+        return purchaseRepository.getPurchaseProfitMoreThenN(n);
+    }
+
+    @Override
+    public List<String> getShopsFromLegalLocationAndDiscountBetweenTwoValues(int left, int right, String banDistrict) {
+        return purchaseRepository.getShopsFromLegalLocationAndDiscountBetweenTwoValues(banDistrict, left, right);
+    }
+
+    @Override
+    public List<SurnameAndShopNameDto> getPurchaseNotBeforeTheDate(Date date) {
+        return purchaseRepository.getPurchaseNotBeforeTheDate(date);
+    }
+
+    @Override
+    public List<BookFromOneDistrictDto> getBookFromOneDistrict(int n) {
+        return purchaseRepository.getBookFromOneDistrict(n);
+    }
+
+    @Override
     public String fullUpdatePurchase(int id, UpdatePurchaseDto updatePurchaseDto) {
         purchase = purchaseRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found purchase with id: " + id));
 
@@ -107,7 +126,7 @@ public class PurchaseImpl implements PurchaseService{
         purchase.setCustomerId(updatePurchaseDto.getCustomerId());
         purchase.setDate(updatePurchaseDto.getDate());
         purchase.setShopId(updatePurchaseDto.getShopId());
-        purchase.setCount(updatePurchaseDto.getCount());
+        purchase.setAmount(updatePurchaseDto.getCount());
         purchase.setPrice(updatePurchaseDto.getPrice());
 
         purchaseRepository.save(purchase);
