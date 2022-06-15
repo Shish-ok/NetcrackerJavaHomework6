@@ -1,8 +1,12 @@
 package com.netcracker.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
+@Setter @Getter
 @Table(name = "shops")
 public class Shop {
 

@@ -1,7 +1,6 @@
 package com.netcracker.rest;
 
 import com.netcracker.dto.customers.CustomersDistrictsDto;
-import com.netcracker.dto.customers.DistrictDto;
 import com.netcracker.dto.customers.SurnameAndDiscountDto;
 import com.netcracker.dto.customers.UpdateCustomerDto;
 import com.netcracker.model.Customer;
